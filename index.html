@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jln Theatre Coffee · Ipoh</title>
+  <meta name="description" content="Jln Theatre Coffee — a micro-roastery café on Jalan Theatre, Ipoh. Specialty coffee, curated signature drinks, brunch, pasta, sandos, croffles and house-baked pastries. Open daily 10am–6pm." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #1f1a17;
+      --ink-soft: #3a322d;
+      --muted: #6b5f57;
+      --paper: #fbf8f3;
+      --sand: #f3ece2;
+      --line: #e6dccf;
+      --brand: #b4531c;
+      --brand-dark: #8c3f12;
+      --mustard: #f5c66f;
+      --peach: #f6bb8c;
+      --blush: #efd0c7;
+      --greige: #ddd4c9;
+      --radius: 20px;
+      --shadow: 0 18px 40px -20px rgba(31, 26, 23, .35);
+      --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+      --font-body: "Manrope", system-ui, -apple-system, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+    body {
+      margin: 0; background: var(--paper); color: var(--ink);
+      font-family: var(--font-body); font-size: 16px; line-height: 1.6;
+      -webkit-font-smoothing: antialiased; overflow-x: hidden;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; }
+    :focus-visible { outline: 3px solid var(--brand); outline-offset: 3px; border-radius: 8px; }
+    .wrap { width: min(1160px, 100% - 32px); margin-inline: auto; }
+    .icon { width: 20px; height: 20px; flex-shrink: 0; }
+    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+    h1, h2, h3 { font-family: var(--font-display); font-stretch: 112%; line-height: 1.08; margin: 0; font-weight: 700; letter-spacing: -.01em; }
+    h2 { font-size: clamp(2rem, 4.6vw, 3.1rem); text-wrap: balance; }
+    .eyebrow {
+      display: inline-block; font-family: var(--font-display); font-stretch: 125%;
+      font-size: .74rem; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; color: var(--brand);
+    }
+    section { padding: clamp(72px, 10vw, 120px) 0; }
+    .section-head { max-width: 640px; margin-bottom: 48px; }
+    .section-head p { color: var(--muted); margin: 16px 0 0; font-size: 1.06rem; }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      min-height: 48px; padding: 0 24px; border-radius: 999px; font-weight: 700; font-size: .98rem;
+      text-decoration: none; border: 2px solid transparent; cursor: pointer; font-family: inherit;
+      transition: background-color .2s, color .2s, border-color .2s, transform .15s;
+    }
+    .btn:active { transform: scale(.98); }
+    .btn-primary { background: var(--ink); color: var(--paper); }
+    .btn-primary:hover { background: var(--brand-dark); }
+    .btn-outline { border-color: var(--ink); color: var(--ink); background: transparent; }
+    .btn-outline:hover { background: var(--ink); color: var(--paper); }
+
+    /* Header */
+    .site-header {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(251, 248, 243, .88); backdrop-filter: saturate(1.4) blur(12px);
+      border-bottom: 1px solid transparent; transition: border-color .2s;
+    }
+    .site-header.scrolled { border-color: var(--line); }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 72px; gap: 16px; }
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .brand-mark { width: 38px; height: 38px; }
+    .brand-name { font-family: var(--font-display); font-stretch: 118%; font-weight: 800; font-size: .86rem; letter-spacing: .12em; line-height: 1.1; text-transform: uppercase; }
+    .brand-name span { display: block; color: var(--brand); }
+    .nav-links { display: flex; align-items: center; gap: 6px; list-style: none; margin: 0; padding: 0; }
+    .nav-links a:not(.btn) {
+      display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px;
+      text-decoration: none; font-weight: 600; font-size: .95rem; color: var(--ink-soft); border-radius: 999px;
+      transition: background-color .2s;
+    }
+    .nav-links a:not(.btn):hover { background: var(--sand); }
+    .nav-links .btn { min-height: 44px; padding: 0 20px; margin-left: 8px; }
+    .menu-toggle { display: none; }
+
+    /* Hero */
+    .hero { padding: clamp(40px, 7vw, 88px) 0 clamp(64px, 9vw, 110px); }
+    .hero-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: clamp(32px, 5vw, 72px); align-items: center; }
+    .hero-grid > *, .roastery-grid > *, .reviews-grid > *, .visit-grid > *, .menu-layout > * { min-width: 0; }
+    .hero h1 { font-size: clamp(2.3rem, 7vw, 4.9rem); margin: 18px 0 22px; overflow-wrap: break-word; }
+    .hero h1 em { font-style: normal; color: var(--brand); }
+    .hero-lede { font-size: 1.14rem; color: var(--muted); max-width: 520px; margin: 0 0 32px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 40px; }
+    .hero-facts { display: flex; flex-wrap: wrap; gap: 28px; padding-top: 28px; border-top: 1px solid var(--line); }
+    .fact { display: flex; flex-direction: column; gap: 2px; }
+    .fact strong { font-family: var(--font-display); font-stretch: 112%; font-size: 1.5rem; line-height: 1.1; display: flex; align-items: center; gap: 6px; }
+    .fact strong svg { width: 18px; height: 18px; color: var(--brand); }
+    .fact span { color: var(--muted); font-size: .9rem; }
+
+    /* Hero mosaic — echoes the printed menu's colour-block tiles */
+    .mosaic { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .tile {
+      aspect-ratio: 1; border-radius: 16px; padding: clamp(12px, 1.6vw, 20px);
+      display: flex; flex-direction: column; justify-content: space-between; text-align: center;
+      transition: transform .35s cubic-bezier(.2, .8, .2, 1);
+    }
+    .tile:hover { transform: translateY(-4px); }
+    .tile small { font-family: var(--font-display); font-stretch: 125%; font-size: .6rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; opacity: .7; }
+    .tile b { font-family: var(--font-display); font-stretch: 125%; font-size: clamp(.68rem, 1.15vw, .86rem); letter-spacing: .14em; text-transform: uppercase; line-height: 1.3; }
+    .tile i { font-style: normal; font-size: .78rem; font-weight: 700; }
+    .tile.mustard { background: var(--mustard); }
+    .tile.peach { background: var(--peach); }
+    .tile.blush { background: var(--blush); }
+    .tile.greige { background: var(--greige); }
+    .tile.dark { background: var(--ink); color: var(--paper); }
+    .tile.dark small { color: var(--mustard); opacity: 1; }
+    .tile.art { padding: 0; align-items: center; justify-content: center; }
+    .tile.art svg { width: 62%; height: 62%; }
+
+    /* Signature drinks */
+    .signatures { background: var(--sand); }
+    .tabs { display: inline-flex; gap: 4px; padding: 4px; background: var(--paper); border: 1px solid var(--line); border-radius: 999px; margin-bottom: 36px; }
+    .tab {
+      min-height: 44px; padding: 0 20px; border-radius: 999px; border: 0; background: transparent;
+      font: inherit; font-weight: 700; font-size: .92rem; color: var(--muted); cursor: pointer;
+      transition: background-color .2s, color .2s;
+    }
+    .tab[aria-selected="true"] { background: var(--ink); color: var(--paper); }
+    .tab:not([aria-selected="true"]):hover { color: var(--ink); }
+    .drink-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .drink {
+      position: relative; background: var(--paper); border-radius: var(--radius); padding: 26px 24px 24px;
+      border: 1px solid var(--line); display: flex; flex-direction: column; gap: 10px;
+      transition: transform .3s cubic-bezier(.2, .8, .2, 1), box-shadow .3s;
+    }
+    .drink:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+    .drink-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+    .swatch { width: 44px; height: 56px; border-radius: 6px 6px 14px 14px; position: relative; overflow: hidden; flex-shrink: 0; }
+    .swatch::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(255,255,255,.35), transparent 40%); }
+    .price { font-family: var(--font-display); font-stretch: 112%; font-weight: 700; font-size: 1.05rem; white-space: nowrap; }
+    .price small { font-size: .7em; color: var(--muted); margin-right: 2px; }
+    .drink h3 { font-size: 1.08rem; font-stretch: 118%; letter-spacing: .04em; text-transform: uppercase; margin-top: 6px; }
+    .drink p { margin: 0; color: var(--muted); font-size: .94rem; }
+    .drink .tag { position: absolute; top: 18px; right: 18px; }
+    .badge {
+      display: inline-flex; align-items: center; min-height: 26px; padding: 0 10px; border-radius: 999px;
+      font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; white-space: nowrap;
+      background: var(--mustard); color: var(--ink);
+    }
+    [hidden] { display: none !important; }
+
+    /* Full menu */
+    .menu-layout { display: grid; grid-template-columns: 240px 1fr; gap: clamp(24px, 4vw, 56px); align-items: start; }
+    .menu-nav { position: sticky; top: 96px; display: flex; flex-direction: column; gap: 2px; }
+    .menu-nav button {
+      text-align: left; min-height: 44px; padding: 0 16px; border: 0; background: transparent; border-radius: 12px;
+      font: inherit; font-weight: 600; color: var(--muted); cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+      transition: background-color .2s, color .2s;
+    }
+    .menu-nav button:hover { background: var(--sand); color: var(--ink); }
+    .menu-nav button[aria-selected="true"] { background: var(--ink); color: var(--paper); }
+    .menu-nav button span { font-size: .78rem; opacity: .6; }
+    .menu-panel h3 { font-size: 1.7rem; margin-bottom: 6px; }
+    .menu-panel .panel-note { color: var(--muted); margin: 0 0 24px; }
+    .menu-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; column-gap: 40px; }
+    .menu-item { display: grid; grid-template-columns: 1fr auto; gap: 4px 16px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+    .menu-item b { font-weight: 700; letter-spacing: .01em; }
+    .menu-item .price { font-size: 1rem; }
+    .menu-item p { grid-column: 1 / -1; margin: 0; color: var(--muted); font-size: .9rem; line-height: 1.5; }
+    .menu-item.sub { grid-column: 1 / -1; border: 0; padding: 26px 0 4px; }
+    .menu-item.sub b { font-family: var(--font-display); font-stretch: 125%; font-size: .74rem; letter-spacing: .22em; text-transform: uppercase; color: var(--brand); }
+    .menu-foot { margin-top: 28px; font-size: .86rem; color: var(--muted); }
+
+    /* Roastery */
+    .roastery { background: var(--ink); color: var(--paper); }
+    .roastery .eyebrow { color: var(--mustard); }
+    .roastery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 88px); align-items: center; }
+    .roastery p { color: #cfc5bc; font-size: 1.08rem; }
+    .pillars { list-style: none; padding: 0; margin: 32px 0 0; display: grid; gap: 18px; }
+    .pillars li { display: flex; gap: 16px; align-items: flex-start; }
+    .pillars .icon-wrap { width: 44px; height: 44px; border-radius: 12px; background: rgba(245, 198, 111, .14); color: var(--mustard); display: grid; place-items: center; flex-shrink: 0; }
+    .pillars b { display: block; color: var(--paper); }
+    .pillars span { color: #b9aea4; font-size: .95rem; }
+    .retail { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .retail-card { border-radius: var(--radius); padding: 24px; min-height: 220px; display: flex; flex-direction: column; justify-content: space-between; color: var(--ink); }
+    .retail-card:first-child { grid-row: span 2; background: var(--mustard); }
+    .retail-card:nth-child(2) { background: var(--blush); }
+    .retail-card:nth-child(3) { background: var(--greige); }
+    .retail-card h3 { font-size: 1.2rem; font-stretch: 118%; }
+    .retail-card p { color: var(--ink-soft); font-size: .92rem; margin: 8px 0 0; }
+    .retail-card svg.art { width: 72px; height: 72px; }
+
+    /* Reviews */
+    .reviews-grid { display: grid; grid-template-columns: 340px 1fr; gap: clamp(32px, 5vw, 72px); align-items: start; }
+    .score { background: var(--sand); border-radius: var(--radius); padding: 32px; }
+    .score-num { font-family: var(--font-display); font-stretch: 112%; font-size: 4.2rem; font-weight: 800; line-height: 1; }
+    .stars { display: flex; gap: 3px; color: var(--brand); margin: 10px 0 6px; }
+    .stars svg { width: 20px; height: 20px; }
+    .score p { margin: 0; color: var(--muted); }
+    .score .btn { margin-top: 24px; width: 100%; }
+    .mentions { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 36px; }
+    .mention { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 18px; border: 1px solid var(--line); border-radius: 999px; font-weight: 600; }
+    .mention span { font-size: .8rem; color: var(--muted); font-weight: 700; }
+    .quotes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .quote { border-left: 3px solid var(--mustard); padding: 4px 0 4px 18px; }
+    .quote p { margin: 0 0 8px; font-size: 1.02rem; }
+    .quote cite { font-style: normal; font-size: .85rem; color: var(--muted); }
+
+    /* Visit */
+    .visit { background: var(--sand); }
+    .visit-grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: 20px; }
+    .visit-card { background: var(--paper); border-radius: var(--radius); padding: clamp(24px, 4vw, 40px); border: 1px solid var(--line); }
+    .info-list { list-style: none; margin: 28px 0 32px; padding: 0; display: grid; gap: 22px; }
+    .info-list li { display: flex; gap: 16px; }
+    .info-list .icon-wrap { width: 44px; height: 44px; border-radius: 12px; background: var(--sand); color: var(--brand); display: grid; place-items: center; flex-shrink: 0; }
+    .info-list b { display: block; margin-bottom: 2px; }
+    .info-list span, .info-list a { color: var(--muted); }
+    .info-list a { text-decoration: underline; text-underline-offset: 3px; }
+    .info-list a:hover { color: var(--brand-dark); }
+    .hours { width: 100%; border-collapse: collapse; font-size: .92rem; margin-top: 4px; }
+    .hours td { padding: 3px 0; color: var(--muted); }
+    .hours td:last-child { text-align: right; }
+    .hours tr.today td { color: var(--ink); font-weight: 700; }
+    .visit-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .map { border-radius: var(--radius); overflow: hidden; min-height: 420px; border: 1px solid var(--line); background: var(--greige); }
+    .map iframe { width: 100%; height: 100%; min-height: 420px; border: 0; display: block; }
+
+    /* Footer */
+    footer { padding: 48px 0; border-top: 1px solid var(--line); }
+    .foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px; color: var(--muted); font-size: .9rem; }
+    .foot p { margin: 0; }
+
+    /* Reveal */
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s cubic-bezier(.2, .8, .2, 1); }
+    .reveal.in { opacity: 1; transform: none; }
+
+    /* Responsive */
+    @media (max-width: 960px) {
+      .hero-grid, .roastery-grid, .reviews-grid, .visit-grid { grid-template-columns: 1fr; }
+      .drink-grid, .quotes { grid-template-columns: 1fr 1fr; }
+      .menu-layout { grid-template-columns: 1fr; }
+      .menu-nav {
+        position: sticky; top: 72px; z-index: 5; flex-direction: row; overflow-x: auto; gap: 6px;
+        background: var(--paper); padding: 10px 0; margin: 0 -16px; padding-inline: 16px; scrollbar-width: none;
+      }
+      .menu-nav::-webkit-scrollbar { display: none; }
+      .menu-nav button { flex-shrink: 0; border: 1px solid var(--line); border-radius: 999px; }
+      .menu-nav button span { display: none; }
+    }
+    @media (max-width: 760px) {
+      .menu-toggle {
+        display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px;
+        border: 1px solid var(--line); background: var(--paper); border-radius: 12px; cursor: pointer; color: var(--ink);
+      }
+      .nav-links {
+        position: absolute; top: 72px; left: 0; right: 0; flex-direction: column; align-items: stretch; gap: 4px;
+        background: var(--paper); border-bottom: 1px solid var(--line); padding: 12px 16px 20px;
+        display: none;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links .btn { margin: 8px 0 0; }
+      .menu-list { grid-template-columns: 1fr; }
+      .retail { grid-template-columns: 1fr; }
+      .retail-card:first-child { grid-row: auto; }
+    }
+    @media (max-width: 560px) {
+      .drink-grid, .quotes { grid-template-columns: 1fr; }
+      .tabs { display: flex; }
+      .tab { flex: 1; padding: 0 12px; }
+      .hero-facts { gap: 20px; }
+      .hero h1 { font-stretch: 100%; }
+      .mosaic { gap: 8px; }
+      .tile { border-radius: 12px; padding: 10px 6px; }
+      .tile b { font-stretch: 100%; letter-spacing: .06em; font-size: .7rem; }
+      .tile small { font-stretch: 100%; letter-spacing: .1em; font-size: .56rem; }
+      .map, .map iframe { min-height: 320px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Reusable icons (Lucide-style strokes) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+      <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></symbol>
+      <symbol id="i-star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+      <symbol id="i-bean" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="12" rx="7" ry="10" transform="rotate(35 12 12)"/><path d="M8.5 5.5c3 3 .5 6.5 3.5 9s4 3 3.5 4"/></symbol>
+      <symbol id="i-flame" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></symbol>
+      <symbol id="i-cup" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><path d="M6 2v2M10 2v2M14 2v2"/></symbol>
+      <symbol id="i-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></symbol>
+      <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    </defs>
+  </svg>
+
+  <header class="site-header" id="top">
+    <nav class="wrap nav" aria-label="Main">
+      <a class="brand" href="#top" aria-label="Jln Theatre Coffee — home">
+        <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+          <rect width="40" height="40" rx="10" fill="#b4531c"/>
+          <path d="M11 30 20 9l9 21" fill="none" stroke="#fbf8f3" stroke-width="3.4" stroke-linejoin="round" stroke-linecap="round"/>
+          <path d="M15.5 23h9" stroke="#f5c66f" stroke-width="3.4" stroke-linecap="round"/>
+        </svg>
+        <span class="brand-name">Jln Theatre<span>Coffee</span></span>
+      </a>
+      <button class="menu-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Open navigation">
+        <svg class="icon"><use href="#i-menu"/></svg>
+      </button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#signatures">Signatures</a></li>
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#roastery">Roastery</a></li>
+        <li><a href="#visit">Visit</a></li>
+        <li><a class="btn btn-primary" href="https://maps.app.goo.gl/MamLRpuxburKCm7t5" target="_blank" rel="noopener">Get directions</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <span class="eyebrow">Micro roastery · Ipoh, Perak</span>
+          <h1>Small-batch coffee, <em>crafted</em> on Jalan Theatre.</h1>
+          <p class="hero-lede">We roast specialty beans in small batches, pour them into drinks you won't find anywhere else, and serve comforting, freshly made food in a space made for slowing down.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#menu">Explore the menu <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            <a class="btn btn-outline" href="#visit">Plan your visit</a>
+          </div>
+          <div class="hero-facts">
+            <div class="fact">
+              <strong>4.3 <svg aria-hidden="true"><use href="#i-star"/></svg></strong>
+              <span>630+ Google reviews</span>
+            </div>
+            <div class="fact">
+              <strong>10am–6pm</strong>
+              <span>Open daily</span>
+            </div>
+            <div class="fact">
+              <strong>70+</strong>
+              <span>Drinks &amp; dishes</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mosaic" aria-label="Menu highlights">
+          <div class="tile greige art" aria-hidden="true">
+            <svg viewBox="0 0 64 64"><ellipse cx="32" cy="32" rx="16" ry="23" transform="rotate(30 32 32)" fill="#5a3b26"/><path d="M24 14c8 7 1 16 9 23s9 9 7 13" fill="none" stroke="#2c1c12" stroke-width="3" stroke-linecap="round"/></svg>
+          </div>
+          <div class="tile mustard"><small>01 · Brunch</small><b>JTC Big<br>Breakfast</b><i>RM32</i></div>
+          <div class="tile dark"><small>Micro</small><b>Roastery</b><i>Est. Ipoh</i></div>
+          <div class="tile blush"><small>Croffle</small><b>Gelato<br>Croffle</b><i>RM18</i></div>
+          <div class="tile peach art" aria-hidden="true">
+            <svg viewBox="0 0 64 64"><path d="M16 18h32l-4 34a4 4 0 0 1-4 3.5H24a4 4 0 0 1-4-3.5Z" fill="#fbf8f3"/><path d="M18.5 30h27l-2.4 22a3 3 0 0 1-3 2.5H24a3 3 0 0 1-3-2.5Z" fill="#b4531c"/><path d="M19 30h26l-.7 7H19.7Z" fill="#f5c66f"/><circle cx="40" cy="16" r="6" fill="#f5c66f" stroke="#b4531c" stroke-width="2"/><path d="M36 6c2 3 1 6 4 8" stroke="#3f7a3a" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>
+          </div>
+          <div class="tile mustard"><small>Signature</small><b>Cinderella</b><i>RM16</i></div>
+          <div class="tile peach"><small>02 · Pasta</small><b>Duck-<br>bonara</b><i>RM25</i></div>
+          <div class="tile greige"><small>03 · Sando</small><b>Katsu<br>Chicken</b><i>RM20</i></div>
+          <div class="tile blush art" aria-hidden="true">
+            <svg viewBox="0 0 64 64"><path d="M10 40c4-16 16-24 26-22 10 2 18 10 18 18-6-4-12-2-16 2-6-6-16-6-28 2Z" fill="#d98a3d"/><path d="M14 38c6-4 12-6 18-4M22 28c5 0 10 2 14 6M34 22c4 2 8 6 10 10" stroke="#a45a1c" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Signature drinks -->
+    <section class="signatures" id="signatures">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow">Curated drinks</span>
+          <h2>Drinks you'll come back for.</h2>
+          <p>Carefully selected flavours, premium ingredients and a barista's imagination. Every signature is built in-house, from espresso tonics to fruit-forward sparklers.</p>
+        </div>
+
+        <div class="tabs reveal" role="tablist" aria-label="Drink collections">
+          <button class="tab" role="tab" id="tab-curated" aria-selected="true" aria-controls="panel-curated">Signatures</button>
+          <button class="tab" role="tab" id="tab-summer" aria-selected="false" aria-controls="panel-summer" tabindex="-1">Summer new</button>
+        </div>
+
+        <div class="drink-grid" id="panel-curated" role="tabpanel" aria-labelledby="tab-curated"></div>
+        <div class="drink-grid" id="panel-summer" role="tabpanel" aria-labelledby="tab-summer" hidden></div>
+      </div>
+    </section>
+
+    <!-- Full menu -->
+    <section id="menu">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow">The menu</span>
+          <h2>Brunch till close, bakes all day.</h2>
+          <p>Comforting, freshly made dishes using quality ingredients — from quinoa bowls and pasta to brioche sandos, croffles and house viennoiseries.</p>
+        </div>
+
+        <div class="menu-layout">
+          <div class="menu-nav" role="tablist" aria-label="Menu categories" aria-orientation="vertical"></div>
+          <div>
+            <div class="menu-panel" id="menu-panel" role="tabpanel" aria-live="polite"></div>
+            <p class="menu-foot">All prices in RM and exclusive of 10% service charge for dine-in. Menu items and prices may change — ask our baristas for today's specials and the secret menu.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Roastery -->
+    <section class="roastery" id="roastery">
+      <div class="wrap roastery-grid">
+        <div class="reveal">
+          <span class="eyebrow">Micro roastery</span>
+          <h2>Roasted in small batches, with intent.</h2>
+          <p>Our micro coffee roastery carefully sources and roasts small batches of specialty beans, highlighting unique origins and flavours to deliver fresh, expressive coffees crafted with passion and precision.</p>
+          <ul class="pillars">
+            <li>
+              <span class="icon-wrap"><svg class="icon" aria-hidden="true"><use href="#i-bean"/></svg></span>
+              <div><b>Specialty origins</b><span>Beans chosen for character, not volume.</span></div>
+            </li>
+            <li>
+              <span class="icon-wrap"><svg class="icon" aria-hidden="true"><use href="#i-flame"/></svg></span>
+              <div><b>Roasted fresh</b><span>Small batches so every cup tastes the way it should.</span></div>
+            </li>
+            <li>
+              <span class="icon-wrap"><svg class="icon" aria-hidden="true"><use href="#i-cup"/></svg></span>
+              <div><b>Brewed your way</b><span>Filter, espresso, milk-based or chilled.</span></div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="retail reveal">
+          <div class="retail-card">
+            <svg class="art" viewBox="0 0 72 72" aria-hidden="true"><rect x="16" y="10" width="40" height="54" rx="4" fill="#fbf8f3"/><rect x="16" y="10" width="40" height="10" rx="3" fill="#e6dccf"/><rect x="24" y="30" width="24" height="22" rx="2" fill="#b4531c"/><path d="M30 46 36 34l6 12" stroke="#fbf8f3" stroke-width="2.4" fill="none" stroke-linejoin="round"/></svg>
+            <div>
+              <h3>Take the beans home</h3>
+              <p>Whole beans and drip bags from our roastery — ask at the counter for what's roasting this week.</p>
+            </div>
+          </div>
+          <div class="retail-card">
+            <div>
+              <h3>Filter coffee</h3>
+              <p>Single-origin pour-overs from RM15.</p>
+            </div>
+          </div>
+          <div class="retail-card">
+            <div>
+              <h3>JTC Meow Charm</h3>
+              <p>A little souvenir that brings you charm and good luck. RM22.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reviews -->
+    <section id="reviews">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow">Loved in Ipoh</span>
+          <h2>What our guests keep talking about.</h2>
+        </div>
+        <div class="reviews-grid">
+          <div class="score reveal">
+            <div class="score-num">4.3</div>
+            <div class="stars" aria-label="4.3 out of 5 stars">
+              <svg aria-hidden="true"><use href="#i-star"/></svg><svg aria-hidden="true"><use href="#i-star"/></svg><svg aria-hidden="true"><use href="#i-star"/></svg><svg aria-hidden="true"><use href="#i-star"/></svg><svg aria-hidden="true" style="opacity:.35"><use href="#i-star"/></svg>
+            </div>
+            <p>Based on 630+ reviews on Google Maps</p>
+            <a class="btn btn-outline" href="https://maps.app.goo.gl/MamLRpuxburKCm7t5" target="_blank" rel="noopener">Read reviews</a>
+          </div>
+          <div class="reveal">
+            <ul class="mentions" aria-label="Most mentioned in reviews" style="list-style:none;padding:0">
+              <li class="mention">Pastries <span>38</span></li>
+              <li class="mention">Friendly barista <span>22</span></li>
+              <li class="mention">Tiramisu <span>9</span></li>
+              <li class="mention">Croffle <span>6</span></li>
+            </ul>
+            <div class="quotes">
+              <blockquote class="quote">
+                <p>“Found this place by chance and glad we did.”</p>
+                <cite>Google review</cite>
+              </blockquote>
+              <blockquote class="quote">
+                <p>“A lot of unique combinations — they also have a secret menu!”</p>
+                <cite>Google review</cite>
+              </blockquote>
+              <blockquote class="quote">
+                <p>“If you're a coffee lover, this place is definitely worth visiting.”</p>
+                <cite>Google review</cite>
+              </blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Visit -->
+    <section class="visit" id="visit">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow">Visit us</span>
+          <h2>Find us in Taman Jubilee.</h2>
+        </div>
+        <div class="visit-grid">
+          <div class="visit-card reveal">
+            <ul class="info-list" style="margin-top:0">
+              <li>
+                <span class="icon-wrap"><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg></span>
+                <div><b>Address</b><span>76, Jalan Theatre, Taman Jubilee,<br>30300 Ipoh, Perak</span></div>
+              </li>
+              <li>
+                <span class="icon-wrap"><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg></span>
+                <div style="flex:1">
+                  <b>Opening hours</b>
+                  <table class="hours" aria-label="Opening hours">
+                    <tbody id="hours-body"></tbody>
+                  </table>
+                </div>
+              </li>
+              <li>
+                <span class="icon-wrap"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg></span>
+                <div><b>Call or WhatsApp</b><a href="tel:+60167550235">016-755 0235</a></div>
+              </li>
+            </ul>
+            <div class="visit-actions">
+              <a class="btn btn-primary" href="https://maps.app.goo.gl/MamLRpuxburKCm7t5" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg> Get directions</a>
+              <a class="btn btn-outline" href="https://wa.me/60167550235" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg> WhatsApp</a>
+            </div>
+          </div>
+          <div class="map reveal">
+            <iframe title="Map showing Jln Theatre Coffee, 76 Jalan Theatre, Ipoh" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+              src="https://www.google.com/maps?q=Jln+Theatre+Coffee,+76+Jalan+Theatre,+Taman+Jubilee,+30300+Ipoh&output=embed"></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap foot">
+      <a class="brand" href="#top" aria-label="Back to top">
+        <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+          <rect width="40" height="40" rx="10" fill="#b4531c"/>
+          <path d="M11 30 20 9l9 21" fill="none" stroke="#fbf8f3" stroke-width="3.4" stroke-linejoin="round" stroke-linecap="round"/>
+          <path d="M15.5 23h9" stroke="#f5c66f" stroke-width="3.4" stroke-linecap="round"/>
+        </svg>
+        <span class="brand-name" style="color:var(--ink)">Jln Theatre<span>Coffee</span></span>
+      </a>
+      <p>76, Jalan Theatre, Taman Jubilee, 30300 Ipoh · 016-755 0235</p>
+      <p>© <span id="year">2026</span> Jln Theatre Coffee</p>
+    </div>
+  </footer>
+
+  <script>
+    /* ---------- Data (from the in-store menus) ---------- */
+    const SIGNATURES = [
+      { name: "Refreshsso", price: 16, desc: "Espresso, orange juice, carbonated water, dried orange, rosemary", c: ["#3b2217", "#e9a13b"] },
+      { name: "Kickasso", price: 16, desc: "Espresso with Kickapoo joy juice and cinnamon, finished with dried orange and mint", c: ["#8a5a3c", "#f0d6b8"] },
+      { name: "Cinderella", price: 16, desc: "Espresso, white chocolate button, fresh milk", c: ["#6d4530", "#f3e7da"], tag: "Guest favourite" },
+      { name: "Lycheenana", price: 16, desc: "Sparkling lychee and banana juice, finished with a lychee, dried orange and mint", c: ["#f6e4c4", "#fff8ea"] },
+      { name: "Summer of Love", price: 16, desc: "William pear, mojito mix, carbonated water, fresh lemon, mint", c: ["#e8efe0", "#f8e3c8"] },
+      { name: "Waikiki Sunset", price: 16, desc: "Peach, William pear, carbonated water, dried lemon, dried pineapple, rosemary", c: ["#f6a770", "#fbe0c2"] }
+    ];
+    const SUMMER = [
+      { name: "When Life Gives You Lemon", price: 15, desc: "Coconut water and cold brew topped with lemon-lime cream, dried lemon, thyme", c: ["#5a2e1f", "#f4ecd8"] },
+      { name: "Secret Garden", price: 15, desc: "Rose, coconut water, cold brew coffee, dried rose petals, thyme", c: ["#5e1f24", "#f1c2c4"] },
+      { name: "Minion in UK", price: 15, desc: "Banana, Earl Grey cold brew tea, dill, cold brew coffee", c: ["#4b2a33", "#efd98c"] },
+      { name: "Apple Lady Oolong", price: 15, desc: "Fuji red apple, oolong tea, lime juice, dill, dried pineapple", c: ["#c9793f", "#f5ead0"] },
+      { name: "Matcha Yuzu BB", price: 16, desc: "Honey, yuzu, sparkling water, Ajisai matcha, dried pineapple", c: ["#3f6b2a", "#f2c769"] },
+      { name: "Pink Wonderland", price: 15, desc: "Pink guava juice, lemon syrup, oolong tea, dried orange, thyme", c: ["#9b3b33", "#e98a78"] },
+      { name: "Mango Sticky Rice", price: 17, desc: "Pandan, sparkling water, mango, cream, coconut milk, bunga kantan, pandan leaves", c: ["#9ccf5a", "#faf3e6"] },
+      { name: "Matcha Earl Grey Lychee", price: 18, desc: "Lychee, Earl Grey cold brew tea, Ajisai matcha cream, edible flowers", c: ["#e59c5b", "#9dbb4a"] },
+      { name: "Pandan Gula Melaka Latte", price: 17, desc: "Espresso, pandan gula melaka, fresh milk, edible flowers, pandan leaves", c: ["#c98f68", "#f1d9c4"] }
+    ];
+
+    const MENU = [
+      { id: "coffee", name: "Coffee", note: "Brewed from beans roasted in our micro roastery. “+” means price varies by bean or add-on.", items: [
+        { sub: "Black" },
+        { n: "Filter Coffee", p: "15+" }, { n: "Espresso", p: 10 }, { n: "Long Black", p: 11 }, { n: "Chilled Black", p: "14+" },
+        { sub: "Milk based" },
+        { n: "Piccolo Latte", p: 12 }, { n: "Cappuccino", p: 13 }, { n: "Flat White", p: 13 }, { n: "Cafe Latte", p: 13 },
+        { n: "Chilled White", p: "15+" }, { n: "Cafe Oat Milk Latte", p: 15 }, { n: "Mocha", p: 15 },
+        { sub: "Others" },
+        { n: "White Chocolate", p: 15 }, { n: "Dark Chocolate", p: 15 }, { n: "Affogato", p: "15+" }
+      ]},
+      { id: "tea", name: "Niko Neko Tea", note: "Japanese teas from Niko Neko.", items: [
+        { sub: "Tea bag" },
+        { n: "Asebi Fukamushicha", p: 12 }, { n: "Momiji Houjicha", p: 12 }, { n: "Nanten Genmaicha", p: 12 },
+        { sub: "Milk based" },
+        { n: "Ajisai Matcha", p: 16 }, { n: "Tsubaki Houjicha", p: 15 }, { n: "Akane Dark Roast Houjicha", p: 15 }
+      ]},
+      { id: "brunch", name: "Brunch", items: [
+        { n: "Avocado on Toast", p: 28, d: "2 slices of multi-grain sourdough, avocado mash, sunny side up, beef bacon, harissa sauce" },
+        { n: "Smoked Salmon", p: 28, d: "2 slices of sourdough, capers, smoked salmon, pickled onion, chives, cream cheese" },
+        { n: "JTC Big Breakfast", p: 32, d: "Sourdough, scrambled egg, Caesar salad, sautéed mushroom, chicken sausage, baked beans, beef bacon" },
+        { n: "Caesar Salad", p: 20, d: "Fresh romaine lettuce, croutons, cherry tomato, beef bacon, Caesar dressing, parmesan" }
+      ]},
+      { id: "bowls", name: "Bowls", items: [
+        { n: "Goddess Bowl", p: 25, d: "Sesame lime dressing · quinoa, roasted pumpkin, broccoli, kale, boiled egg, rocket, sesame seeds" },
+        { n: "Fajitas Bowl", p: 27, d: "Lemon garlic dressing · quinoa, prawn, ulam selom, red onion, pickled onion, roasted bell pepper" },
+        { n: "Tofu Vegan Bowl", p: 23, d: "Garlic soy dressing · quinoa, tofu, kale, Japanese cucumber, avocado, cherry tomatoes, zucchini" },
+        { n: "Chicken Bowl", p: 27, d: "Garlic soy dressing · quinoa, grilled chicken, kale, zucchini, Japanese cucumber, cherry tomatoes, rocket" }
+      ]},
+      { id: "pasta", name: "Pasta", items: [
+        { n: "Truffle Aglio Olio", p: 25, d: "Umami-packed truffle & shimeji mushroom, angel hair, garlic, chilli flakes" },
+        { n: "Pesto Linguine", p: 24, d: "Basil & pine nut pesto, sautéed cherry tomatoes, parmesan, rocket" },
+        { n: "Duckbonara", p: 25, d: "Linguine tossed in pan-seared smoked duck, parmesan, black pepper" },
+        { n: "Tomato Red Chic", p: 27, d: "Grilled seasoned chicken chop, linguine, cherry tomatoes, garlic, freshly made tomato sauce" },
+        { n: "Chicken Aglio Olio", p: 26, d: "Grilled seasoned chicken chop, linguine, cherry tomatoes, garlic, chilli flakes" },
+        { n: "Salted Egg Chicken", p: 29, d: "Linguine with crispy fried chicken and salted egg sauce" }
+      ]},
+      { id: "sando", name: "Sando", items: [
+        { n: "Katsu Chicken", p: 20, d: "Brioche, coleslaw, tonkatsu sauce, chicken katsu" },
+        { n: "Ham & Cheese", p: 17, d: "Brioche, premium chicken ham, cheddar, rocket" },
+        { n: "Pesto Chicken", p: 23, d: "Brioche, pesto chicken breast, fresh tomatoes, rocket" },
+        { n: "Truffle Mimosa", p: 19, d: "Brioche, truffle mimosa egg, black pepper, rocket" }
+      ]},
+      { id: "croffle", name: "Croffles", items: [
+        { sub: "Chicken croffle" },
+        { n: "Sriracha Chicken", p: 25, d: "Croffle, crispy fried chicken, homemade sriracha mayonnaise" },
+        { n: "Golden Chicken", p: "Ask", d: "Croffle, crispy fried chicken, golden maple syrup" },
+        { sub: "Gelato croffle" },
+        { n: "Vanilla / Chocolate", p: 18, d: "Croffle, premium gelato, peanuts, Oreo crumbs, caramel & chocolate sauce, charcoal cone" },
+        { n: "Pistachio / Matcha", p: 19, d: "Croffle, premium gelato, strawberries, blueberries, strawberry sauce, charcoal cone" }
+      ]},
+      { id: "bakes", name: "Pastries & Quiche", note: "Baked in-house daily — our pastries are the most-mentioned thing in reviews.", items: [
+        { sub: "Viennoiseries" },
+        { n: "Butter Croissant", p: 9.9 }, { n: "Kouign Amann", p: 9.9 }, { n: "Pain au Chocolat", p: 9.9 },
+        { n: "Cinnamon Roll", p: 9.9 }, { n: "Canelé", p: 9.9 }, { n: "Bombolone", p: 7, d: "Weekends only" },
+        { sub: "Quiches" },
+        { n: "Mushroom Quiche", p: 13 }, { n: "Smoked Duck Quiche", p: 15 }
+      ]},
+      { id: "cakes", name: "Cakes & Dessert", items: [
+        { n: "Brownie", p: 13 }, { n: "Brownie with Gelato", p: "16+" }, { n: "Tiramisu", p: 15 },
+        { n: "Carrot Cake", p: 17 }, { n: "Burnt Cheesecake", p: 17 }, { n: "Matcha Burnt Cheesecake", p: 18 },
+        { n: "Strawberry Shortcake", p: 16 }, { n: "Salted Caramel Chocolate Cake", p: 17 }, { n: "Onde-Onde Sensation", p: 17 },
+        { n: "Earl Grey Rose Cake", p: 17 }, { n: "Peanut Butter & Jam Cake", p: 17 }
+      ]}
+    ];
+
+    /* ---------- Helpers ---------- */
+    const esc = s => String(s).replace(/[&<>"]/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]));
+    const fmt = p => typeof p === "number" ? (Number.isInteger(p) ? p : p.toFixed(1)) : p;
+    const priceHTML = p => p === "Ask" ? `<span class="price">Ask us</span>` : `<span class="price"><small>RM</small>${esc(fmt(p))}</span>`;
+
+    /* ---------- Drinks ---------- */
+    function renderDrinks(el, list) {
+      el.innerHTML = list.map(d => `
+        <article class="drink reveal">
+          ${d.tag ? `<span class="tag badge">${esc(d.tag)}</span>` : ""}
+          <div class="drink-top">
+            <span class="swatch" aria-hidden="true" style="background:linear-gradient(to top, ${d.c[0]} 0 55%, ${d.c[1]} 55%)"></span>
+            ${d.tag ? "" : priceHTML(d.price)}
+          </div>
+          <h3>${esc(d.name)}</h3>
+          <p>${esc(d.desc)}</p>
+          ${d.tag ? priceHTML(d.price) : ""}
+        </article>`).join("");
+    }
+    renderDrinks(document.getElementById("panel-curated"), SIGNATURES);
+    renderDrinks(document.getElementById("panel-summer"), SUMMER);
+
+    function setupTabs(tabs, onSelect) {
+      tabs.forEach((tab, i) => {
+        tab.addEventListener("click", () => onSelect(i));
+        tab.addEventListener("keydown", e => {
+          const keys = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 };
+          if (!(e.key in keys)) return;
+          e.preventDefault();
+          const next = (i + keys[e.key] + tabs.length) % tabs.length;
+          onSelect(next); tabs[next].focus();
+        });
+      });
+    }
+    function selectTab(tabs, i) {
+      tabs.forEach((t, j) => { t.setAttribute("aria-selected", j === i); t.tabIndex = j === i ? 0 : -1; });
+    }
+
+    const drinkTabs = [...document.querySelectorAll(".tabs .tab")];
+    setupTabs(drinkTabs, i => {
+      selectTab(drinkTabs, i);
+      drinkTabs.forEach((t, j) => {
+        const panel = document.getElementById(t.getAttribute("aria-controls"));
+        panel.hidden = j !== i;
+        if (j === i) panel.querySelectorAll(".reveal").forEach(r => r.classList.add("in"));
+      });
+    });
+
+    /* ---------- Menu ---------- */
+    const menuNav = document.querySelector(".menu-nav");
+    const menuPanel = document.getElementById("menu-panel");
+    menuNav.innerHTML = MENU.map((c, i) =>
+      `<button role="tab" id="mtab-${c.id}" aria-controls="menu-panel" aria-selected="${i === 0}" tabindex="${i === 0 ? 0 : -1}">
+        ${esc(c.name)} <span>${c.items.filter(x => !x.sub).length}</span></button>`).join("");
+    const menuTabs = [...menuNav.querySelectorAll("button")];
+
+    function renderMenu(i) {
+      const c = MENU[i];
+      selectTab(menuTabs, i);
+      menuPanel.setAttribute("aria-labelledby", `mtab-${c.id}`);
+      menuPanel.innerHTML = `
+        <h3>${esc(c.name)}</h3>
+        ${c.note ? `<p class="panel-note">${esc(c.note)}</p>` : `<p class="panel-note"></p>`}
+        <ul class="menu-list">
+          ${c.items.map(it => it.sub
+            ? `<li class="menu-item sub"><b>${esc(it.sub)}</b></li>`
+            : `<li class="menu-item"><b>${esc(it.n)}</b>${priceHTML(it.p)}${it.d ? `<p>${esc(it.d)}</p>` : ""}</li>`).join("")}
+        </ul>`;
+      menuTabs[i].scrollIntoView({ block: "nearest", inline: "nearest" });
+    }
+    setupTabs(menuTabs, renderMenu);
+    renderMenu(0);
+
+    /* ---------- Hours (highlight today, Malaysia time) ---------- */
+    const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+    const myDay = new Intl.DateTimeFormat("en-US", { weekday: "long", timeZone: "Asia/Kuala_Lumpur" }).format(new Date());
+    document.getElementById("hours-body").innerHTML = days.map(d =>
+      `<tr class="${d === myDay ? "today" : ""}"><td>${d}${d === myDay ? " (today)" : ""}</td><td>10:00 am – 6:00 pm</td></tr>`).join("");
+
+    /* ---------- Header, mobile nav, reveal ---------- */
+    const header = document.querySelector(".site-header");
+    addEventListener("scroll", () => header.classList.toggle("scrolled", scrollY > 8), { passive: true });
+
+    const toggle = document.querySelector(".menu-toggle");
+    const links = document.getElementById("nav-links");
+    toggle.addEventListener("click", () => {
+      const open = links.classList.toggle("open");
+      toggle.setAttribute("aria-expanded", open);
+      toggle.setAttribute("aria-label", open ? "Close navigation" : "Open navigation");
+    });
+    links.addEventListener("click", e => {
+      if (e.target.closest("a")) { links.classList.remove("open"); toggle.setAttribute("aria-expanded", false); }
+    });
+
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver(entries => entries.forEach(en => {
+        if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
+      }), { threshold: 0.12 });
+      document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+    } else {
+      document.querySelectorAll(".reveal").forEach(el => el.classList.add("in"));
+    }
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
